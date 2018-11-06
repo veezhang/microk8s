@@ -28,7 +28,7 @@ function create_machine() {
   tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
   if [ "$#" -ne 1 ]
   then
-    touch /etc/environment
+    lxc exec $NAME -- /bin/bash "touch /etc/environment"
     lxc exec $NAME -- /bin/bash "echo HTTPS_PROXY=$2 >> /etc/environment"
     lxc exec $NAME -- /bin/bash "echo https_proxy=$2 >> /etc/environment"
   fi
