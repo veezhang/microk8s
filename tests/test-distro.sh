@@ -2,7 +2,7 @@
 
 if echo "$*" | grep -q -- 'help'; then
     prog=$(basename -s.wrapper "$0")
-    echo "Usage: $prog LXC-IMAGE ORIGINAL-CHANNEL UPGRADE-WITH-CHANNEL"
+    echo "Usage: $prog LXC-IMAGE ORIGINAL-CHANNEL UPGRADE-WITH-CHANNEL [PROXY]"
     echo ""
     echo "Example: $prog ubuntu:18.04 beta edge"
     echo "Use Ubuntu 18.04 for running our tests."
@@ -15,6 +15,7 @@ fi
 
 function create_machine() {
   local NAME=$1
+  local PROXY=$2
   if ! lxc profile show microk8s
   then
     lxc profile copy default microk8s
@@ -26,9 +27,11 @@ function create_machine() {
   # Allow for the machine to boot and get an IP
   sleep 20
   tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
-  env
-  cat /etc/apt/apt.conf
-  lxc file push /etc/environment $NAME/etc/environment
+  if ! [ -z "$PROXY" ]
+  then
+    lxc exec $NAME -- /bin/bash "echo HTTPS_PROXY=$PROXY >> /etc/environment"
+    lxc exec $NAME -- /bin/bash "echo https_proxy=$PROXY >> /etc/environment"
+  fi
   lxc exec $NAME -- /bin/bash "/tmp/tests/lxc/install-deps/$DISTRO"
 }
 
@@ -38,8 +41,9 @@ DISTRO=$1
 NAME=machine-$RANDOM
 FROM_CHANNEL=$2
 TO_CHANNEL=$3
+PROXY=$4
 
-create_machine $NAME
+create_machine $NAME $PROXY
 lxc exec $NAME -- snap install microk8s --channel=${TO_CHANNEL} --classic
 lxc exec $NAME -- /tmp/tests/patch-kube-proxy.sh
 # use 'script' for required tty: https://github.com/lxc/lxd/issues/1724#issuecomment-194416774
