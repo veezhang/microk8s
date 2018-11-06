@@ -42,7 +42,7 @@ NAME=machine-$RANDOM
 FROM_CHANNEL=$2
 TO_CHANNEL=$3
 PROXY=""
-if ! [ -z "$4" ]
+if [ "$#" -ne 3 ]
 then
   PROXY=$4
 fi
