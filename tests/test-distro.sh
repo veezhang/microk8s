@@ -26,6 +26,7 @@ function create_machine() {
   # Allow for the machine to boot and get an IP
   sleep 20
   tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
+  lxc file push /etc/environment $NAME/etc/environment
   lxc exec $NAME -- /bin/bash "/tmp/tests/lxc/install-deps/$DISTRO"
 }
 
