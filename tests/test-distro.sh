@@ -27,6 +27,7 @@ function create_machine() {
   sleep 20
   tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
   env
+  cat /etc/apt/apt.conf
   lxc file push /etc/environment $NAME/etc/environment
   lxc exec $NAME -- /bin/bash "/tmp/tests/lxc/install-deps/$DISTRO"
 }
