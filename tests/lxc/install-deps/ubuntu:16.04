@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
 apt-get update
-apt-get install python-pip -y
+
+apt-get remove python-pip python3-pip -y
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py
+python3 get-pip.py
+
+# apt-get install python-pip -y
 pip install -U pytest requests pyyaml
