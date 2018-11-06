@@ -15,7 +15,6 @@ fi
 
 function create_machine() {
   local NAME=$1
-  local PROXY=$2
   if ! lxc profile show microk8s
   then
     lxc profile copy default microk8s
@@ -27,10 +26,10 @@ function create_machine() {
   # Allow for the machine to boot and get an IP
   sleep 20
   tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
-  if ! [ -z "$PROXY" ]
+  if [ "$#" -ne 1 ]
   then
-    lxc exec $NAME -- /bin/bash "echo HTTPS_PROXY=$PROXY >> /etc/environment"
-    lxc exec $NAME -- /bin/bash "echo https_proxy=$PROXY >> /etc/environment"
+    lxc exec $NAME -- /bin/bash "echo HTTPS_PROXY=$2 >> /etc/environment"
+    lxc exec $NAME -- /bin/bash "echo https_proxy=$2 >> /etc/environment"
   fi
   lxc exec $NAME -- /bin/bash "/tmp/tests/lxc/install-deps/$DISTRO"
 }
