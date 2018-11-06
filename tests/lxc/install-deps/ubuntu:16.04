@@ -9,5 +9,6 @@ apt-get update
 #python3 get-pip.py
 
 apt-get install python-pip -y
+pip install --upgrade pip
 #python-pytest python-requests python-yaml -y
 pip install -U -v pytest requests pyyaml
