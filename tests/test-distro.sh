@@ -41,7 +41,11 @@ DISTRO=$1
 NAME=machine-$RANDOM
 FROM_CHANNEL=$2
 TO_CHANNEL=$3
-PROXY=$4
+PROXY=""
+if [ -z "$4" ]
+then
+  PROXY=$4
+fi
 
 create_machine $NAME $PROXY
 lxc exec $NAME -- snap install microk8s --channel=${TO_CHANNEL} --classic
