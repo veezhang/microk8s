@@ -46,7 +46,7 @@ then
   PROXY=$4
 fi
 
-create_machine $NAME $PROXY
+create_machine $NAME "http://squid.internal:3128"  # $PROXY
 lxc exec $NAME -- snap install microk8s --channel=${TO_CHANNEL} --classic
 lxc exec $NAME -- /tmp/tests/patch-kube-proxy.sh
 # use 'script' for required tty: https://github.com/lxc/lxd/issues/1724#issuecomment-194416774
