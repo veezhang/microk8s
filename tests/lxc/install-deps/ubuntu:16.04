@@ -11,4 +11,4 @@ apt-get remove python-pip python3-pip -y
 apt-get install python3-pip -y
 #pip3 install --upgrade pip
 #python-pytest python-requests python-yaml -y
-pip3 install -U -v pytest requests pyyaml
+pip3 --proxy https://squid.internal:3128 install -U -v pytest requests pyyaml
