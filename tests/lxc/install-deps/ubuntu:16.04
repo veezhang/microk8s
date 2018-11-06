@@ -3,10 +3,10 @@
 
 apt-get update
 
-apt-get remove python-pip python3-pip -y
-wget https://bootstrap.pypa.io/get-pip.py
-python get-pip.py
-python3 get-pip.py
+#apt-get remove python-pip python3-pip -y
+#wget https://bootstrap.pypa.io/get-pip.py
+#python get-pip.py
+#python3 get-pip.py
 
-# apt-get install python-pip -y
-pip install -U pytest requests pyyaml
+apt-get install python-pip python-pytest python-requests python-yaml -y
+#pip install -U pytest requests pyyaml
