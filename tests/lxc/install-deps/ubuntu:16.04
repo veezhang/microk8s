@@ -2,11 +2,7 @@
 
 set -x
 
-if [ -f "/tmp/settings" ]
-then
-  cat /tmp/settings
-  source /tmp/settings
-fi
+export $(grep -v '^#' /etc/environment | xargs)
 env
 apt-get update
 apt-get install python-pip -y
