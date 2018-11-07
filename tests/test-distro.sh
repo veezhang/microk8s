@@ -28,9 +28,8 @@ function create_machine() {
   tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
   if [ "$#" -ne 1 ]
   then
-    lxc exec $NAME -- /bin/bash -c "touch /etc/environment"
-    lxc exec $NAME -- /bin/bash -c "echo HTTPS_PROXY=$2 >> /etc/environment"
-    lxc exec $NAME -- /bin/bash -c "echo https_proxy=$2 >> /etc/environment"
+    lxc exec $NAME -- /bin/bash -c "echo HTTPS_PROXY=$2 >> /tmp/settings"
+    lxc exec $NAME -- /bin/bash -c "echo https_proxy=$2 >> /tmp/settings"
   fi
   lxc exec $NAME -- /bin/bash "/tmp/tests/lxc/install-deps/$DISTRO"
 }

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ -e "/tmp/settings" ]
+then
+  source /tmp/settings
+fi
 env
 apt-get update
 apt-get install python-pip -y
