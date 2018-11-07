@@ -3,6 +3,20 @@
 set -x
 
 export $(grep -v '^#' /etc/environment | xargs)
+
+if ! [ -z "$https_proxy" ]
+then
+  sudo mkdir -p /etc/systemd/system/snapd.service.d
+  sudo bash -c 'cat > /etc/systemd/system/snapd.service.d/snap_proxy.conf' << EOL
+  [Service]
+  Environment=http_proxy=$https_proxy
+  Environment=https_proxy=$https_proxy
+  EOL
+  cat  /etc/systemd/system/snapd.service.d/snap_proxy.conf
+  sudo systemctl daemon-reload
+  sudo systemctl restart snapd.service
+fi
+
 env
 apt-get update
 apt-get install python-pip -y
