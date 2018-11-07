@@ -27,8 +27,8 @@ function create_machine() {
   sleep 20
   if [ "$#" -ne 1 ]
   then
-    lxc exec $NAME -- /bin/bash -c "echo export HTTPS_PROXY=$2 >> /etc/environment"
-    lxc exec $NAME -- /bin/bash -c "echo export https_proxy=$2 >> /etc/environment"
+    lxc exec $NAME -- /bin/bash -c "echo HTTPS_PROXY=$2 >> /etc/environment"
+    lxc exec $NAME -- /bin/bash -c "echo https_proxy=$2 >> /etc/environment"
     lxc exec $NAME -- reboot
     sleep 20
   fi

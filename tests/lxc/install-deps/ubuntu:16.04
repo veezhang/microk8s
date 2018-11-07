@@ -9,7 +9,7 @@ then
   sudo mkdir -p /etc/systemd/system/snapd.service.d
   echo "[Service]
   Environment=http_proxy=$https_proxy
-  Environment=https_proxy=$https_proxy" > /etc/systemd/system/snapd.service.d/snap_proxy.conf'
+  Environment=https_proxy=$https_proxy" > /etc/systemd/system/snapd.service.d/snap_proxy.conf
   cat  /etc/systemd/system/snapd.service.d/snap_proxy.conf
   sudo systemctl daemon-reload
   sudo systemctl restart snapd.service
