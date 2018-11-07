@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
-if [ -e "/tmp/settings" ]
+set -x
+
+if [ -f "/tmp/settings" ]
 then
+  cat /tmp/settings
   source /tmp/settings
 fi
 env
