@@ -25,7 +25,6 @@ function create_machine() {
   trap "lxc delete ${NAME} --force || true" EXIT
   # Allow for the machine to boot and get an IP
   sleep 20
-  tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
   if [ "$#" -ne 1 ]
   then
     lxc exec $NAME -- /bin/bash -c "echo export HTTPS_PROXY=$2 >> /etc/environment"
@@ -33,6 +32,7 @@ function create_machine() {
     lxc exec $NAME -- reboot
     sleep 20
   fi
+  tar cf - ./tests | lxc exec $NAME -- tar xvf - -C /tmp
   lxc exec $NAME -- /bin/bash "/tmp/tests/lxc/install-deps/$DISTRO"
 }
 
